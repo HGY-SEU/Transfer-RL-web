@@ -324,29 +324,43 @@
       };
     }
 
-    // Visitor map — ClustrMaps static world map image.
-    // The image is both the visualization and the tracking pixel: ClustrMaps
-    // records a visit every time a browser fetches the PNG. Much more reliable
-    // than the globe.js script (no document.write, no iframe gymnastics).
+    // Visitor 3D globe — ClustrMaps globe widget inside an isolated iframe.
+    // The iframe srcdoc lets globe.js's internal document.write target the
+    // iframe's document instead of the live main page DOM (which silently
+    // fails to render on the page after load).
+    // If ClustrMaps' servers are down (it happens — DNS-level outage), the
+    // iframe simply stays blank. No global error, no page break.
     const slot = document.getElementById('visitorMapSlot');
     if (slot) {
       const KEY = 'dZsiTLFFKTSJFfI7pO9rqarYVwaLYDc_iv3vs9aXpgo';
+
+      const iframe = document.createElement('iframe');
+      iframe.width = '260';
+      iframe.height = '260';
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('scrolling', 'no');
+      iframe.style.cssText = 'background: transparent; border: 0; display: block;';
+      iframe.title = 'Visitor globe';
+      iframe.srcdoc =
+        '<!DOCTYPE html><html><head><style>' +
+        'html,body{margin:0;padding:0;background:transparent;overflow:hidden;}' +
+        'body{display:flex;align-items:center;justify-content:center;' +
+        'font:12px/1.4 -apple-system,Segoe UI,sans-serif;color:#888;}' +
+        '</style></head><body>' +
+        '<script type="text/javascript" id="clstr_globe" ' +
+        'src="https://clustrmaps.com/globe.js?d=' + KEY + '"><\/script>' +
+        '</body></html>';
+      slot.appendChild(iframe);
+
+      // Footer link so visitors can click through to the full stats page
       const link = document.createElement('a');
       link.href = 'https://clustrmaps.com/site/' + KEY;
       link.target = '_blank';
       link.rel = 'noopener';
-      link.title = 'See visitor details';
-      const img = document.createElement('img');
-      img.id = 'visitorMap';
-      img.alt = 'Visitor world map';
-      // Cache-busting timestamp so each page load refreshes & re-pings ClustrMaps
-      img.src = 'https://clustrmaps.com/map_v2.png?cl=ffffff&w=260&t=tt&d=' +
-                KEY + '&co=4b6cff&ct=808080&_=' + Date.now();
-      img.onerror = () => {
-        slot.innerHTML =
-          '<div class="map-placeholder">Map unavailable.</div>';
-      };
-      link.appendChild(img);
+      link.textContent = 'See visitor details →';
+      link.style.cssText =
+        'display: block; font-size: 11px; color: var(--accent);' +
+        'margin-top: 6px; text-decoration: none;';
       slot.appendChild(link);
     }
   });
