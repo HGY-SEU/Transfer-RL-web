@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" aria-label="Purdue University">
+  <title>Purdue University</title>
+  <!-- Background tile in Boilermaker Gold -->
+  <rect x="2" y="2" width="44" height="44" rx="10" ry="10" fill="#CEB888"/>
+  <!-- Block letter P in black -->
+  <path d="M14 11 H28 Q34 11 34 17.5 V20.5 Q34 27 28 27 H21 V37 H14 Z M21 16 V22 H26.5 Q27 22 27 21.5 V17.5 Q27 16.5 26 16.5 H21 Z"
+        fill="#000000"/>
+</svg>

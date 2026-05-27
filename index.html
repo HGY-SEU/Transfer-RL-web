@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Transferable RL via Probabilistic Latent Embeddings — ICML 2026</title>
+<meta name="description" content="ICML 2026 project page: Transferable Reinforcement Learning via Probabilistic Latent Embeddings and Dynamic Policy Adaptation for Sim-to-Real Deployment." />
+
+<!-- Open Graph (social previews) -->
+<meta property="og:title" content="Transferable RL via Probabilistic Latent Embeddings (ICML 2026)" />
+<meta property="og:description" content="Safe and efficient policy transfer for Sim-to-Real deployment, ICML 2026." />
+<meta property="og:image" content="static/images/teaser.png" />
+<meta property="og:type" content="website" />
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+Pro:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<!-- Custom styles -->
+<link rel="stylesheet" href="static/css/custom.css?v=10" />
+
+<!-- JS-enabled marker (gates initial-hidden reveal state in CSS, prevents
+     content disappearing if JS fails to load) -->
+<script>document.documentElement.classList.add('js');</script>
+</head>
+
+<body>
+
+<!-- Theme toggle -->
+<button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">☽</button>
+
+<!-- =========================================
+     HERO
+     ========================================= -->
+<header class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="hero-inner">
+    <div class="venue-badge">
+      <img src="static/images/icml_logo.svg" alt="" class="venue-logo" />
+      <span>ICML 2026</span>
+    </div>
+
+    <h1>Transferable Reinforcement Learning via Probabilistic Latent Embeddings and Dynamic Policy Adaptation for Sim-to-Real Deployment</h1>
+
+    <p class="authors">
+      <a href="https://scholar.google.com/citations?user=MaeZl3UAAAAJ&amp;hl" target="_blank" rel="noopener">Gengyue Han</a>
+      &nbsp;·&nbsp;
+      <a href="https://engineering.purdue.edu/CCE/People/ptProfile?resource_id=244000" target="_blank" rel="noopener">Yiheng Feng</a>
+    </p>
+
+    <p class="affiliations">
+      <img src="static/images/purdue_logo.svg" alt="" class="aff-logo" />
+      <span>Purdue University</span>
+    </p>
+
+    <!-- Badge buttons -->
+    <div class="badges">
+      <!-- UPDATE: arXiv PDF link — once arXiv is up, swap data-modal for href -->
+      <button class="badge" data-modal="paperModal" title="Paper PDF">
+        <span>📄</span> Paper
+      </button>
+      <!-- UPDATE: arXiv abstract page link -->
+      <a href="#" class="badge" target="_blank" rel="noopener" title="arXiv">
+        <span>📚</span> arXiv
+      </a>
+      <a href="https://youtu.be/Mn9avTYnMa8" class="badge" target="_blank" rel="noopener" title="Watch video">
+        <span>▶</span> Video
+      </a>
+      <!-- UPDATE: code repo link — once public, swap data-modal for href -->
+      <button class="badge" data-modal="codeModal" title="Code">
+        <span>&lt;/&gt;</span> Code
+      </button>
+      <a href="#bibtex" class="badge" title="BibTeX">
+        <span>❝</span> BibTeX
+      </a>
+    </div>
+  </div>
+
+  <a href="#abstract" class="scroll-indicator" aria-label="Scroll down">⌄</a>
+</header>
+
+<!-- =========================================
+     TEASER (Figure 1: problem formulation / Sim2Real)
+     ========================================= -->
+<section class="teaser-section">
+  <div class="container reveal">
+    <img src="static/images/teaser.png" alt="Problem formulation: the Sim-to-Real gap in reinforcement learning" class="teaser-img" data-zoomable fetchpriority="high" />
+    <p class="figure-caption justify">
+      <strong>The Sim2Real gap.</strong> RL training typically requires substantial interactions between
+      the agent and the environment, making direct training on real systems expensive and often unsafe
+      due to exploratory behaviors. As a result, many RL policies are first trained in simulators, where
+      data collection is cheap and safety risks are minimized. However, when deployed in the real world,
+      such policies trained in simulation often suffer from performance degradation and safety risks due
+      to the mismatch between simulation and reality. This mismatch is commonly referred to as the
+      <em>Sim2Real</em> gap.
+    </p>
+  </div>
+</section>
+
+<!-- =========================================
+     ABSTRACT (single paragraph)
+     ========================================= -->
+<section id="abstract">
+  <div class="container reveal">
+    <h2 class="section-title">Abstract</h2>
+    <div class="prose">
+      <p>
+        Due to limited resources and public safety concerns, deep reinforcement learning (RL) agents for
+        many cyber-physical systems (e.g., autonomous vehicles) are first trained in simulators. However,
+        when deployed in real world environments, they often suffer from performance degradation or safety
+        violations because of the inevitable <em>Sim2Real</em> gap. Existing zero-shot approaches, such as
+        robust safe RL and domain randomization, mitigate this issue but typically at the cost of degraded
+        performance or residual safety risks when experiencing unmodeled system dynamics. To address these
+        limitations, we propose a novel reinforcement learning framework that enables safe and efficient
+        policy transfer via <strong>probabilistic latent embeddings</strong> and
+        <strong>dynamic policy adaptation</strong>. We consider a family of Constrained Markov Decision
+        Processes (CMDPs) under different environment contexts. By leveraging latent context variable in
+        meta-RL, the proposed framework infers the latent representation of the environment from simulated
+        experiences. Furthermore, it incorporates a distributional RL formulation, which allows risk
+        levels of the deployed policy to be adjusted dynamically, based on the estimation accuracy of the
+        latent context variable. This strategy promotes safety at the early deployment stage and improves
+        efficiency through fast policy adaptation under the <em>Sim2Real</em> gap.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     KEY INNOVATIONS
+     ========================================= -->
+<section id="innovations" style="background: var(--bg-soft);">
+  <div class="container reveal">
+    <h2 class="section-title">Key Innovations</h2>
+    <div class="insight-box">
+      <ul>
+        <li>
+          <strong>Unified safe and adaptive <em>Sim2Real</em> framework.</strong>
+          We present a unified CMDP-based framework that integrates probabilistic latent context variable
+          adaptation with distributional reinforcement learning, enabling safe and adaptive policy
+          transfer under <em>Sim2Real</em> mismatch.
+        </li>
+        <li>
+          <strong>Inference-time risk regulation.</strong>
+          By incorporating distributional RL into the CMDP formulation, our approach allows the risk
+          levels of the deployed policy to be adjusted dynamically at inference time, balancing safety
+          and performance during real-world deployment.
+        </li>
+        <li>
+          <strong>Theoretical guarantees.</strong>
+          We provide theoretical proofs on training convergence, quantify the benefits of latent context
+          variable adaptation, and demonstrate assured safety under the <em>Sim2Real</em> gap.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     METHOD (with framework figure + provided text)
+     ========================================= -->
+<section id="method">
+  <div class="container reveal">
+    <h2 class="section-title">Method</h2>
+    <div class="figure-block">
+      <img src="static/images/method.png" alt="Framework: latent context encoder + distributional policy + safety upper-bound" data-zoomable loading="lazy" />
+      <p class="figure-caption">Framework overview of the proposed approach.</p>
+    </div>
+    <div class="prose">
+      <p>
+        We introduce an <strong>encoder</strong> that extracts salient environment-specific information,
+        enabling the learned policy to condition its actions on the underlying environment
+        <span class="sec-ref">(Section&nbsp;4.1)</span>. In addition,
+        <strong>distributional reinforcement learning</strong> is employed to characterize the
+        distributions of both rewards and costs under the latent information
+        <span class="sec-ref">(Section&nbsp;4.2 and 4.3)</span>, allowing risk level to be adjusted with
+        latent context variable adaptation <span class="sec-ref">(Section&nbsp;5.1)</span>. A
+        <strong>safety upper-bound</strong> is then developed
+        <span class="sec-ref">(Section&nbsp;5.2)</span> and the agent is proven to be safe under dynamic
+        adaptation of risk-sensitive policy <span class="sec-ref">(Section&nbsp;5.3 and 5.4)</span>.
+        Together, these components enable
+        <strong>safe and effective policy transfer with limited real-world interactions</strong> under
+        the Sim2Real gap.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     EXPERIMENTAL RESULTS
+     ========================================= -->
+<section id="results" style="background: var(--bg-soft);">
+  <div class="container reveal">
+    <h2 class="section-title">Experimental Results</h2>
+
+    <!-- ----- Two task scenes side by side ----- -->
+    <h3 class="subsection-title">Task environments</h3>
+    <div class="scene-grid tilt-grid">
+      <figure class="scene-card tilt-card">
+        <div class="scene-img-wrap pg-wrap">
+          <img src="static/images/f5_exp.png" alt="PointGoal2 task scene — point robot navigating among hazards and vases toward a goal" data-zoomable loading="lazy" />
+        </div>
+        <figcaption>
+          <span class="task-tag"><span class="smallcaps">PointGoal2</span></span>
+          A point robot must reach a green goal while avoiding hazards (blue discs) and vases (cyan cubes).
+          Safety constraint: cost ≤&nbsp;10 per episode.
+        </figcaption>
+      </figure>
+      <figure class="scene-card tilt-card">
+        <div class="scene-img-wrap ad-wrap">
+          <img src="static/images/f6_platoon.png" alt="Autonomous Driving platoon — RL ego vehicle following the leader" data-zoomable loading="lazy" />
+        </div>
+        <figcaption>
+          <span class="task-tag"><span class="smallcaps">Autonomous Driving</span></span>
+          The RL ego (gold) controls the 3rd vehicle in the platoon, smoothing the platoon by
+          suppressing speed oscillations propagated from the leading vehicle.
+          Safety constraint: cost ≤&nbsp;20 per episode.
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- ----- demo video (local file) ----- -->
+    <h3 class="subsection-title" style="margin-top: 56px;">Demonstration video</h3>
+    <div class="video-wrapper local-video">
+      <video controls preload="metadata">
+        <source src="static/videos/demo.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <p class="figure-caption">
+      Demonstration of our proposed method for <span class="smallcaps">PointGoal2</span> task.
+    </p>
+
+    <p class="prose" style="margin-top: 24px;">
+      During training, all methods successfully learn to reach the goal without violating the cost
+      constraints. In deployment, however,
+      a clear performance divergence emerges. Nominal, Domain Randomized, and Robust RL baselines
+      achieve high rewards but suffer from severe cost violations, indicating limited safety in the
+      deployment environment with <em>Sim2Real</em> gap. In contrast, both SPiDR and our method exhibit
+      conservative behaviors and have substantially lower costs, at the expense of lower rewards. This
+      reward–cost trade-off is expected in both tasks, where more cautious navigation leads to better
+      hazards avoidance in unseen environments in the first task, and more conservative AV speed-control
+      reduces the risk of rear-end collisions in the second task. Notably, compared to SPiDR, our method
+      achieves a more favorable trade-off by attaining
+      <strong>lower deployment costs while simultaneously achieving higher rewards</strong>.
+    </p>
+
+    <!-- ----- Detailed analyses: left = 1 img, right = 2 stacked imgs ----- -->
+    <h3 class="subsection-title" style="margin-top: 64px;">Detailed analyses</h3>
+    <div class="figure-grid analysis-grid tilt-grid">
+      <figure class="figure-grid-item tilt-card analysis-left">
+        <div class="single-img">
+          <img src="static/images/f3a_cost.png" alt="Figure 3 — cost trajectory" data-zoomable loading="lazy" />
+        </div>
+        <figcaption>
+          <strong>Dynamic risk-sensitive adaptation.</strong>
+        </figcaption>
+      </figure>
+      <figure class="figure-grid-item tilt-card analysis-right">
+        <div class="stacked-imgs">
+          <img src="static/images/f4a_cost_bar.png" alt="Figure 4a — cost bar chart across OOD scenarios" data-zoomable loading="lazy" />
+          <img src="static/images/f4b_reward_bar.png" alt="Figure 4b — reward bar chart across OOD scenarios" data-zoomable loading="lazy" />
+        </div>
+        <figcaption>
+          <strong>Robustness across OOD scenarios.</strong> Our method
+          <em>consistently maintains deployment costs below the threshold</em> across all OOD scenarios,
+          while preserving competitive reward (bottom).
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     BIBTEX
+     ========================================= -->
+<section id="bibtex" class="bibtex-section">
+  <div class="container reveal">
+    <h2 class="section-title">BibTeX</h2>
+    <div class="bibtex-wrapper">
+      <div class="bibtex-header">
+        <span>citation.bib</span>
+        <button id="copyBibtex" class="copy-btn"><span>⧉</span> Copy</button>
+      </div>
+<pre class="bibtex-code" id="bibtexCode">@inproceedings{han2026transferable,
+  title     = {Transferable Reinforcement Learning via Probabilistic Latent
+               Embeddings and Dynamic Policy Adaptation for Sim-to-Real Deployment},
+  author    = {Han, Gengyue and Feng, Yiheng},
+  booktitle = {Proceedings of the 43rd International Conference on
+               Machine Learning (ICML)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {306},
+  year      = {2026},
+  publisher = {PMLR},
+  address   = {Seoul, South Korea}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     FOOTER
+     ========================================= -->
+<footer>
+  <div class="container">
+    <p>
+      <strong>Contact</strong>: Yiheng Feng &lt;<a href="mailto:feng333@purdue.edu">feng333@purdue.edu</a>&gt;
+    </p>
+    <p style="margin-top: 8px;">
+      Purdue University
+    </p>
+    <p style="margin-top: 12px; font-size: 12px; color: var(--ink-muted);">
+      Template adapted from the <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noopener">Nerfies project page</a>, with custom design.
+    </p>
+
+    <!-- ===== Page stats: visit counter + visitor world map =====
+         Both are populated by JS only when running on http(s) — local file://
+         previews skip all external network calls so the page loads instantly. -->
+    <div class="page-stats" id="pageStats" hidden>
+      <div class="stats-block">
+        <div class="stats-label">Page views</div>
+        <img id="visitCounter" alt="Visit counter" />
+      </div>
+      <div class="stats-block">
+        <div class="stats-label">Visitor map</div>
+        <div id="visitorMapSlot"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- =========================================
+     MODAL: Paper not yet released
+     ========================================= -->
+<div id="paperModal" class="modal" aria-hidden="true" role="dialog">
+  <div class="modal-card">
+    <button class="modal-close" data-close-modal aria-label="Close">×</button>
+    <div class="modal-icon">📄</div>
+    <h3>Paper not yet available</h3>
+    <p>
+      The official proceedings have not been released yet.<br />
+      Once published on <strong>PMLR</strong> / <strong>arXiv</strong>, this button will link directly
+      to the paper.
+    </p>
+    <p class="modal-sub">Thanks for your patience — please check back soon.</p>
+    <button class="modal-action" data-close-modal>Got it</button>
+  </div>
+</div>
+
+<!-- =========================================
+     MODAL: Code coming soon
+     ========================================= -->
+<div id="codeModal" class="modal" aria-hidden="true" role="dialog">
+  <div class="modal-card">
+    <button class="modal-close" data-close-modal aria-label="Close">×</button>
+    <div class="modal-icon">&lt;/&gt;</div>
+    <h3>Code release in progress</h3>
+    <p>
+      We are currently conducting <strong>real-world testing</strong> on the full pipeline.
+      The complete codebase — including training scripts, environments, and reproduction
+      instructions — will be released here once we finish cleaning it up.
+    </p>
+    <p class="modal-sub">Star the repo (link coming) to get notified when it goes public.</p>
+    <button class="modal-action" data-close-modal>Got it</button>
+  </div>
+</div>
+
+<!-- Image lightbox -->
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <button id="lightboxClose" class="lightbox-close" aria-label="Close">×</button>
+  <img id="lightboxImg" src="" alt="" />
+</div>
+
+<!-- Scripts -->
+<script src="static/js/index.js?v=10" defer></script>
+
+</body>
+</html>
