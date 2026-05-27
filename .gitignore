@@ -1,0 +1,16 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+.vscode/
+.idea/
+*~
+
+# Unused image artifacts left from earlier iterations of the page
+# (kept locally but not part of the deployed site)
+static/images/cost.png
+static/images/f3b_reward.png
+static/images/platoon.png
+static/images/results.png

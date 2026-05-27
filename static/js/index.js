@@ -300,21 +300,22 @@
     });
   }
 
-  // ---------- Visit counter + visitor map (skip on local file://) ----------
-  // External calls are deferred to after window 'load' AND only run when on
-  // http(s) — local previews stay 100% offline & instant.
+  // ---------- Visit counter + visitor globe (skip on local file://) ----------
+  // External calls are deferred until after window 'load' and only run on
+  // http(s) — local file:// previews stay 100% offline & instant.
   window.addEventListener('load', () => {
-    if (!/^https?:$/i.test(location.protocol)) return; // local file:// — skip
+    if (!/^https?:$/i.test(location.protocol)) return; // local — skip
     const stats = document.getElementById('pageStats');
     if (stats) stats.hidden = false;
 
+    // --- Visit counter: api.visitorbadge.io (reliable, no signup) ---
     const counterImg = document.getElementById('visitCounter');
     if (counterImg) {
-      const pageUrl = encodeURIComponent(location.href.split('#')[0]);
+      const path = encodeURIComponent(location.href.split('#')[0]);
       counterImg.src =
-        'https://hits.seeyoufarm.com/api/count/incr/badge.svg' +
-        '?url=' + pageUrl +
-        '&count_bg=%234B6CFF&title_bg=%23555&title=views&edge_flat=false';
+        'https://api.visitorbadge.io/api/visitors' +
+        '?path=' + path +
+        '&label=views&countColor=%234B6CFF&style=flat-square&labelColor=%23555555';
       counterImg.onerror = () => {
         counterImg.replaceWith(Object.assign(document.createElement('div'), {
           className: 'map-placeholder',
@@ -323,17 +324,30 @@
       };
     }
 
+    // --- Visitor 3D globe: ClustrMaps inside an isolated iframe srcdoc ---
+    // The ClustrMaps globe.js uses document.write internally, which fails when
+    // the script is injected into the live DOM after page load. Wrapping it
+    // in an iframe lets document.write target the iframe's document instead.
     const slot = document.getElementById('visitorMapSlot');
     if (slot) {
-      // ClustrMaps globe widget — interactive 3D globe with visitor pins.
-      // The script auto-renders the globe at its insertion point.
       const CLUSTRMAPS_KEY = 'dZsiTLFFKTSJFfI7pO9rqarYVwaLYDc_iv3vs9aXpgo';
       if (CLUSTRMAPS_KEY) {
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.id = 'clstr_globe';
-        script.src = '//clustrmaps.com/globe.js?d=' + CLUSTRMAPS_KEY;
-        slot.appendChild(script);
+        const iframe = document.createElement('iframe');
+        iframe.width = '240';
+        iframe.height = '240';
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('scrolling', 'no');
+        iframe.style.cssText = 'background: transparent; border: 0; display: block;';
+        iframe.title = 'Visitor globe';
+        iframe.srcdoc =
+          '<!DOCTYPE html><html><head><style>' +
+          'html,body{margin:0;padding:0;background:transparent;overflow:hidden;}' +
+          'body{display:flex;align-items:center;justify-content:center;}' +
+          '</style></head><body>' +
+          '<script type="text/javascript" id="clstr_globe" ' +
+          'src="//clustrmaps.com/globe.js?d=' + CLUSTRMAPS_KEY + '"><\/script>' +
+          '</body></html>';
+        slot.appendChild(iframe);
       } else {
         slot.innerHTML =
           '<div class="map-placeholder">🌍 Sign up free at ' +
