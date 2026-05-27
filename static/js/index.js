@@ -324,37 +324,10 @@
       };
     }
 
-    // --- Visitor 3D globe: ClustrMaps inside an isolated iframe srcdoc ---
-    // The ClustrMaps globe.js uses document.write internally, which fails when
-    // the script is injected into the live DOM after page load. Wrapping it
-    // in an iframe lets document.write target the iframe's document instead.
-    const slot = document.getElementById('visitorMapSlot');
-    if (slot) {
-      const CLUSTRMAPS_KEY = 'dZsiTLFFKTSJFfI7pO9rqarYVwaLYDc_iv3vs9aXpgo';
-      if (CLUSTRMAPS_KEY) {
-        const iframe = document.createElement('iframe');
-        iframe.width = '240';
-        iframe.height = '240';
-        iframe.setAttribute('frameborder', '0');
-        iframe.setAttribute('scrolling', 'no');
-        iframe.style.cssText = 'background: transparent; border: 0; display: block;';
-        iframe.title = 'Visitor globe';
-        iframe.srcdoc =
-          '<!DOCTYPE html><html><head><style>' +
-          'html,body{margin:0;padding:0;background:transparent;overflow:hidden;}' +
-          'body{display:flex;align-items:center;justify-content:center;}' +
-          '</style></head><body>' +
-          '<script type="text/javascript" id="clstr_globe" ' +
-          'src="//clustrmaps.com/globe.js?d=' + CLUSTRMAPS_KEY + '"><\/script>' +
-          '</body></html>';
-        slot.appendChild(iframe);
-      } else {
-        slot.innerHTML =
-          '<div class="map-placeholder">🌍 Sign up free at ' +
-          '<a href="https://clustrmaps.com" target="_blank" rel="noopener">clustrmaps.com</a>' +
-          ' and paste your key into <code>static/js/index.js</code>.</div>';
-      }
-    }
+    // Visitor globe is now embedded inline in index.html (inside #visitorMapSlot)
+    // via a document.write call during initial HTML parsing — that lets the
+    // ClustrMaps script run in the main page context so it can attribute the
+    // visit to the real URL. See the inline <script> there.
   });
 
   // ---------- Scroll progress bar ----------
