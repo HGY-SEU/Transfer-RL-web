@@ -324,43 +324,43 @@
       };
     }
 
-    // Visitor 3D globe — ClustrMaps globe widget inside an isolated iframe.
-    // The iframe srcdoc lets globe.js's internal document.write target the
-    // iframe's document instead of the live main page DOM (which silently
-    // fails to render on the page after load).
-    // If ClustrMaps' servers are down (it happens — DNS-level outage), the
-    // iframe simply stays blank. No global error, no page break.
+    // Visitor map — whos.amung.us map widget (replaces dead ClustrMaps).
+    // Real visitor pins on a 2D world map. No account, no signup; the tracker
+    // ID is just a unique string under which stats accumulate.
+    // Full stats viewable at https://whos.amung.us/stats/<TRACKER_ID>
     const slot = document.getElementById('visitorMapSlot');
     if (slot) {
-      const KEY = 'dZsiTLFFKTSJFfI7pO9rqarYVwaLYDc_iv3vs9aXpgo';
+      const TRACKER_ID = 'trrlicml26';   // unique tracker for this site
+      const NAME = 'vMap';                // widget DOM suffix
 
-      const iframe = document.createElement('iframe');
-      iframe.width = '260';
-      iframe.height = '260';
-      iframe.setAttribute('frameborder', '0');
-      iframe.setAttribute('scrolling', 'no');
-      iframe.style.cssText = 'background: transparent; border: 0; display: block;';
-      iframe.title = 'Visitor globe';
-      iframe.srcdoc =
-        '<!DOCTYPE html><html><head><style>' +
-        'html,body{margin:0;padding:0;background:transparent;overflow:hidden;}' +
-        'body{display:flex;align-items:center;justify-content:center;' +
-        'font:12px/1.4 -apple-system,Segoe UI,sans-serif;color:#888;}' +
-        '</style></head><body>' +
-        '<script type="text/javascript" id="clstr_globe" ' +
-        'src="https://clustrmaps.com/globe.js?d=' + KEY + '"><\/script>' +
-        '</body></html>';
-      slot.appendChild(iframe);
+      // Match the map theme to the current page theme
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 
-      // Footer link so visitors can click through to the full stats page
+      // Inline config — must carry id="_wau_<NAME>"; amung.us' loader finds
+      // it via that id and inserts the map element next to it.
+      const cfg = document.createElement('script');
+      cfg.id = '_wau_' + NAME;
+      cfg.text =
+        'var _wau = _wau || []; ' +
+        '_wau.push(["map", "' + TRACKER_ID + '", "' + NAME + '", ' +
+        '"320", "200", "' + (isDark ? 'night' : 'day') + '", "cross-blue"]);';
+      slot.appendChild(cfg);
+
+      // Async loader
+      const loader = document.createElement('script');
+      loader.async = true;
+      loader.src = 'https://waust.at/m.js';
+      slot.appendChild(loader);
+
+      // Click-through link to the full stats dashboard
       const link = document.createElement('a');
-      link.href = 'https://clustrmaps.com/site/' + KEY;
+      link.href = 'https://whos.amung.us/stats/' + TRACKER_ID;
       link.target = '_blank';
       link.rel = 'noopener';
       link.textContent = 'See visitor details →';
       link.style.cssText =
         'display: block; font-size: 11px; color: var(--accent);' +
-        'margin-top: 6px; text-decoration: none;';
+        'margin-top: 8px; text-decoration: none;';
       slot.appendChild(link);
     }
   });
