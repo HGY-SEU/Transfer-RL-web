@@ -324,54 +324,9 @@
       };
     }
 
-    // Visitor map — whos.amung.us map widget (replaces dead ClustrMaps).
-    // Real visitor pins on a 2D world map. No account, no signup; the tracker
-    // ID is just a unique string under which stats accumulate.
-    // Full stats viewable at https://whos.amung.us/stats/<TRACKER_ID>
-    //
-    // IMPORTANT: m.js anchors the rendered map by calling
-    //     document.getElementById("_wau" + _wau[n][2])
-    // i.e. NO separator between "_wau" and the 3rd push arg. The script's
-    // id and the 3rd arg therefore must concatenate to that exact id —
-    // here both produce "_wauvMap".
-    const slot = document.getElementById('visitorMapSlot');
-    if (slot) {
-      const TRACKER_ID = 'trrlicml26';
-      const NAME = 'vMap';                          // 3rd arg of _wau.push
-      const ANCHOR_ID = '_wau' + NAME;              // = "_wauvMap"
-
-      // Match the map theme to the current page theme
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-
-      // Inline config script — its id is the anchor m.js will look up.
-      const cfg = document.createElement('script');
-      cfg.id = ANCHOR_ID;
-      cfg.text =
-        'var _wau = _wau || []; ' +
-        '_wau.push(["map", "' + TRACKER_ID + '", "' + NAME + '", ' +
-        // amung.us has only 'night' and 'classic' map backgrounds live on
-        // their CDN right now — the 'day' background returns 404, which is
-        // what caused the broken-image box. Use 'classic' for light mode.
-        '"320", "200", "' + (isDark ? 'night' : 'classic') + '", "cross-blue"]);';
-      slot.appendChild(cfg);
-
-      // Async loader
-      const loader = document.createElement('script');
-      loader.async = true;
-      loader.src = 'https://waust.at/m.js';
-      slot.appendChild(loader);
-
-      // Click-through link to the full stats dashboard
-      const link = document.createElement('a');
-      link.href = 'https://whos.amung.us/stats/' + TRACKER_ID;
-      link.target = '_blank';
-      link.rel = 'noopener';
-      link.textContent = 'See visitor details →';
-      link.style.cssText =
-        'display: block; font-size: 11px; color: var(--accent);' +
-        'margin-top: 8px; text-decoration: none;';
-      slot.appendChild(link);
-    }
+    // (Visitor map removed — none of the free services that survived
+    //  ClustrMaps' shutdown produced a result we liked. Keeping just the
+    //  page-view counter.)
   });
 
   // ---------- Scroll progress bar ----------

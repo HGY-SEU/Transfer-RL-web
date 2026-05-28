@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+Pro:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <!-- Custom styles -->
-<link rel="stylesheet" href="static/css/custom.css?v=18" />
+<link rel="stylesheet" href="static/css/custom.css?v=19" />
 
 <!-- JS-enabled marker (gates initial-hidden reveal state in CSS, prevents
      content disappearing if JS fails to load) -->
@@ -312,17 +312,13 @@
       Template adapted from the <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noopener">Nerfies project page</a>, with custom design.
     </p>
 
-    <!-- ===== Page stats: visit counter + visitor world map =====
-         Both are populated by JS only when running on http(s) — local file://
-         previews skip all external network calls so the page loads instantly. -->
+    <!-- ===== Page stats: visit counter =====
+         Populated by JS only when running on http(s) — local file://
+         previews skip the external network call so the page loads instantly. -->
     <div class="page-stats" id="pageStats" hidden>
       <div class="stats-block">
         <div class="stats-label">Page views</div>
         <img id="visitCounter" alt="Visit counter" />
-      </div>
-      <div class="stats-block">
-        <div class="stats-label">Visitor map</div>
-        <div id="visitorMapSlot"></div>
       </div>
     </div>
   </div>
@@ -353,7 +349,7 @@
 </div>
 
 <!-- Scripts -->
-<script src="static/js/index.js?v=18" defer></script>
+<script src="static/js/index.js?v=19" defer></script>
 
 </body>
 </html>
