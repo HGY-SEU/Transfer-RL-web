@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+Pro:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <!-- Custom styles -->
-<link rel="stylesheet" href="static/css/custom.css?v=14" />
+<link rel="stylesheet" href="static/css/custom.css?v=15" />
 
 <!-- JS-enabled marker (gates initial-hidden reveal state in CSS, prevents
      content disappearing if JS fails to load) -->
@@ -59,12 +59,10 @@
 
     <!-- Badge buttons -->
     <div class="badges">
-      <!-- UPDATE: arXiv PDF link — once arXiv is up, swap data-modal for href -->
-      <button class="badge" data-modal="paperModal" title="Paper PDF">
+      <a href="https://arxiv.org/pdf/2605.27659" class="badge" target="_blank" rel="noopener" title="Paper PDF">
         <span>📄</span> Paper
-      </button>
-      <!-- UPDATE: arXiv abstract page link -->
-      <a href="#" class="badge" target="_blank" rel="noopener" title="arXiv">
+      </a>
+      <a href="https://arxiv.org/abs/2605.27659" class="badge" target="_blank" rel="noopener" title="arXiv">
         <span>📚</span> arXiv
       </a>
       <a href="https://youtu.be/Mn9avTYnMa8" class="badge" target="_blank" rel="noopener" title="Watch video">
@@ -331,24 +329,6 @@
 </footer>
 
 <!-- =========================================
-     MODAL: Paper not yet released
-     ========================================= -->
-<div id="paperModal" class="modal" aria-hidden="true" role="dialog">
-  <div class="modal-card">
-    <button class="modal-close" data-close-modal aria-label="Close">×</button>
-    <div class="modal-icon">📄</div>
-    <h3>Paper not yet available</h3>
-    <p>
-      The official proceedings have not been released yet.<br />
-      Once published on <strong>PMLR</strong> / <strong>arXiv</strong>, this button will link directly
-      to the paper.
-    </p>
-    <p class="modal-sub">Thanks for your patience — please check back soon.</p>
-    <button class="modal-action" data-close-modal>Got it</button>
-  </div>
-</div>
-
-<!-- =========================================
      MODAL: Code coming soon
      ========================================= -->
 <div id="codeModal" class="modal" aria-hidden="true" role="dialog">
@@ -373,7 +353,7 @@
 </div>
 
 <!-- Scripts -->
-<script src="static/js/index.js?v=14" defer></script>
+<script src="static/js/index.js?v=15" defer></script>
 
 </body>
 </html>
