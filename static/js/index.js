@@ -328,18 +328,24 @@
     // Real visitor pins on a 2D world map. No account, no signup; the tracker
     // ID is just a unique string under which stats accumulate.
     // Full stats viewable at https://whos.amung.us/stats/<TRACKER_ID>
+    //
+    // IMPORTANT: m.js anchors the rendered map by calling
+    //     document.getElementById("_wau" + _wau[n][2])
+    // i.e. NO separator between "_wau" and the 3rd push arg. The script's
+    // id and the 3rd arg therefore must concatenate to that exact id —
+    // here both produce "_wauvMap".
     const slot = document.getElementById('visitorMapSlot');
     if (slot) {
-      const TRACKER_ID = 'trrlicml26';   // unique tracker for this site
-      const NAME = 'vMap';                // widget DOM suffix
+      const TRACKER_ID = 'trrlicml26';
+      const NAME = 'vMap';                          // 3rd arg of _wau.push
+      const ANCHOR_ID = '_wau' + NAME;              // = "_wauvMap"
 
       // Match the map theme to the current page theme
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 
-      // Inline config — must carry id="_wau_<NAME>"; amung.us' loader finds
-      // it via that id and inserts the map element next to it.
+      // Inline config script — its id is the anchor m.js will look up.
       const cfg = document.createElement('script');
-      cfg.id = '_wau_' + NAME;
+      cfg.id = ANCHOR_ID;
       cfg.text =
         'var _wau = _wau || []; ' +
         '_wau.push(["map", "' + TRACKER_ID + '", "' + NAME + '", ' +
